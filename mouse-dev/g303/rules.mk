@@ -1,0 +1,14 @@
+DEBOUNCE_TYPE = asym_eager_defer_pk
+
+MCU = cortex-m3
+ARMV = 7
+MCU_FAMILY = STM32
+MCU_SERIES = STM32L1xx
+MCU_LDSCRIPT ?= STM32L100x8T6_dapboot
+MCU_STARTUP ?= stm32l1xx
+BOARD ?= ST_NUCLEO64_L152RE
+USE_FPU ?= no
+DFU_ARGS ?= -d 1209:db42 -t 128
+DFU_SUFFIX_ARGS ?= -v 1209 -p db42
+
+EEPROM_DRIVER = transient

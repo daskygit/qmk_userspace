@@ -4,8 +4,18 @@
 *~
 .DS_Store
 ._*
+__pycache__
 
 # Firmware files
 *.hex
 *.bin
 *.uf2
+
+# cloned repo
+/qmk_firmware
+
+# Other junk
+.cache
+.vscode/.cortex-debug*
+.vscode/ipch
+compile_commands.json

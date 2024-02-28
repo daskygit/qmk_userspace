@@ -1,0 +1,9 @@
+RGB_MATRIX_ENABLE = yes
+RGBLIGHT_ENABLE = no
+
+OLED_ENABLE = yes
+OLED_DRIVER = ssd1306
+
+USER_NAME := dasky
+
+CONVERT_TO = promicro_rp2040
