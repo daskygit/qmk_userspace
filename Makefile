@@ -51,7 +51,7 @@ LINKED_BOARD_DEFS := \
 	prime!keyboards/steelseries/prime_plus!default!mouse-dev/prime_plus \
 	g303!keyboards/logitech/g303!default!mouse-dev/g303 \
 	cp!keyboards/mb/cp!dasky!keyboards-dev/cp \
-	sp!keyboards/dasky/sb!default!keyboards-dev/sp \
+	sp!keyboards/dasky/sp!default!keyboards-dev/sp \
 
 keyboards_folder := keyboards/
 empty :=

@@ -1,4 +1,7 @@
 SERIAL_DRIVER = vendor
 
+POINTING_DEVICE_DRIVERS += azoteq_iqs5xx
+POINTING_DEVICE_DRIVERS += cirque_pinnacle_spi
+
 POINTING_DEVICE_DRIVER = azoteq_iqs5xx
 POINTING_DEVICE_ENABLE = yes
