@@ -51,6 +51,7 @@ LINKED_BOARD_DEFS := \
 	prime!keyboards/steelseries/prime_plus!default!mouse-dev/prime_plus \
 	g303!keyboards/logitech/g303!default!mouse-dev/g303 \
 	cp!keyboards/mb/cp!dasky!keyboards-dev/cp \
+	sp!keyboards/dasky/sb!default!keyboards-dev/sp \
 
 keyboards_folder := keyboards/
 empty :=
@@ -119,5 +120,5 @@ $(foreach board_entry,$(LINKED_BOARD_DEFS),$(eval $(call handle_board_entry,$(bo
 $(foreach board_entry,$(LINKED_BOARD_DEFS),$(eval $(call handle_linked_board_entry,$(board_entry))))
 
 .PHONY: all
-all: nah echo stinky prime g303 reverb crkbd
+all: nah echo stinky prime g303 reverb crkbd sp cp
 
