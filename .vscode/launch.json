@@ -1,0 +1,21 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Black Magic Probe (sp)",
+            "type": "cortex-debug",
+            "request": "attach",
+            "cwd": "${workspaceRoot}",
+            "executable": "${workspaceRoot}/qmk_firmware/.build/dasky_sp_default.elf",
+            "servertype": "bmp",
+            "BMPGDBSerialPort": "/dev/tty.usbmodem3557335632371",
+            "svdFile": "qmk_firmware/lib/pico-sdk/src/rp2040/hardware_regs/rp2040.svd",
+            "device": "RP2040",
+            "v1": false,
+            "showDevDebugOutput": "none"
+        },
+    ]
+}
