@@ -11,7 +11,7 @@
             "cwd": "${workspaceRoot}",
             "executable": "${workspaceRoot}/qmk_firmware/.build/dasky_sp_default.elf",
             "servertype": "bmp",
-            "BMPGDBSerialPort": "/dev/tty.usbmodem3557335632371",
+            "BMPGDBSerialPort": "/dev/cu.usbmodem3557335632371",
             "svdFile": "qmk_firmware/lib/pico-sdk/src/rp2040/hardware_regs/rp2040.svd",
             "device": "RP2040",
             "v1": false,
