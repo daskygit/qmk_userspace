@@ -17,35 +17,39 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_ADJUST]   = LAYOUT_wrapper(KEYS_35(ADJUST)),
     [_POINTING] = LAYOUT(
     QK_BOOT, XXXXXXX, XXXXXXX, DPI_MOD, S_D_MOD, S_D_MOD, DPI_MOD, XXXXXXX, XXXXXXX, QK_BOOT,
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    _______, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______,
     _______, DRGSCRL, SNIPING, KC_BTN4, KC_BTN5, KC_BTN5, KC_BTN4, SNIPING, DRGSCRL, _______,
-                      KC_BTN3, KC_BTN1, KC_BTN2, KC_BTN2, KC_BTN1
+                      KC_BTN2, KC_BTN1, RAISEL, KC_BTN1, KC_BTN2
   ),
 };
 // clang-format on
 
 static uint32_t last_keyboard_keypress = 0;
+static bool     mouse_button_held      = false;
 
 bool process_record_keymap(uint16_t keycode, keyrecord_t* record) {
     if (!IS_MOUSE_KEYCODE(keycode) && !IS_KB_KEYCODE(keycode)) {
         last_keyboard_keypress = timer_read32();
+        layer_off(_POINTING);
+    } else {
+        mouse_button_held = record->event.pressed;
     }
     return true;
 }
 
 void housekeeping_task_keymap(void) {
-    if (IS_LAYER_ON(_POINTING) && last_pointing_device_activity_elapsed() > 750) {
+    if (!mouse_button_held && IS_LAYER_ON(_POINTING) && last_pointing_device_activity_elapsed() > 700) {
         layer_off(_POINTING);
     }
 }
 
 report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
-    if (timer_elapsed32(last_keyboard_keypress) < 500) {
+    if (timer_elapsed32(last_keyboard_keypress) < 100) {
         mouse_report.x = 0;
         mouse_report.y = 0;
     }
     if (abs(mouse_report.x) > 1 || abs(mouse_report.y) > 1) {
-        if (!IS_LAYER_ON(_POINTING)) {
+        if (get_highest_layer(layer_state) == _QWERTY) {
             layer_on(_POINTING);
         }
     }
