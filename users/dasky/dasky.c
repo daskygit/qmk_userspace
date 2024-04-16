@@ -82,7 +82,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         if (!process_record_keymap(keycode, record)) {
         return false;
         }
-        
+
 #ifdef CUSTOM_TAP_CODE_ENABLE
     if (!process_record_taps(keycode, record)) {
         return false;
@@ -200,12 +200,15 @@ void housekeeping_task_throttled(void) {
     }
 }
 
+__attribute__((weak)) void housekeeping_task_keymap(void) {}
+
 void housekeeping_task_user(void) {
     static fast_timer_t throttle_timer = 0;
     if (timer_elapsed_fast(throttle_timer) >= USB_POLLING_INTERVAL_MS) {
         housekeeping_task_throttled();
         throttle_timer = timer_read_fast();
     }
+    housekeeping_task_keymap();
 }
 
 void matrix_scan_user(void) {

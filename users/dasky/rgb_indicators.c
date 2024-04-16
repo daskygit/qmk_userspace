@@ -144,10 +144,10 @@ void rgb_show_layer(uint8_t led_min, uint8_t led_max) {
                         case QK_BOOT:
                             hue = 64;
                             break;
-                        case EE_CLR:
+                        case QK_CLEAR_EEPROM:
                             hue = 0;
                             break;
-                        case MAGIC_TOGGLE_NKRO:
+                        case QK_MAGIC_TOGGLE_NKRO:
                             hue = 222;
                             break;
                         default:
