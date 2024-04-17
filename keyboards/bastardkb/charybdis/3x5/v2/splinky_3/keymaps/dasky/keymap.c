@@ -18,14 +18,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_POINTING] = LAYOUT(
     QK_BOOT, XXXXXXX, XXXXXXX, DPI_MOD, S_D_MOD, S_D_MOD, DPI_MOD, XXXXXXX, XXXXXXX, QK_BOOT,
     _______, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______,
-    _______, DRGSCRL, SNIPING, KC_BTN4, KC_BTN5, KC_BTN5, KC_BTN4, SNIPING, DRGSCRL, _______,
-                      KC_BTN2, KC_BTN1, RAISEL, KC_BTN1, KC_BTN2
+    _______, DRGSCRL, SNIPING, KC_BTN4, KC_BTN5, KC_BTN1, KC_BTN2, SNIPING, DRGSCRL, _______,
+                      KC_BTN2, KC_BTN1, _______, _______, _______
   ),
 };
 // clang-format on
 
 static uint32_t last_keyboard_keypress = 0;
 static bool     mouse_button_held      = false;
+extern void     last_pointing_device_activity_trigger(void);
 
 bool process_record_keymap(uint16_t keycode, keyrecord_t* record) {
     if (!IS_MOUSE_KEYCODE(keycode) && !IS_KB_KEYCODE(keycode)) {
@@ -33,12 +34,13 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t* record) {
         layer_off(_POINTING);
     } else {
         mouse_button_held = record->event.pressed;
+        last_pointing_device_activity_trigger();
     }
     return true;
 }
 
 void housekeeping_task_keymap(void) {
-    if (!mouse_button_held && IS_LAYER_ON(_POINTING) && last_pointing_device_activity_elapsed() > 700) {
+    if (!mouse_button_held && IS_LAYER_ON(_POINTING) && last_pointing_device_activity_elapsed() > 900) {
         layer_off(_POINTING);
     }
 }
