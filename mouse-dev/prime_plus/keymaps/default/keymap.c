@@ -34,9 +34,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case CUS_BTN5:
             if (record->event.pressed) {
-                register_code16(detected_host_os() == OS_IOS ? G(KC_RIGHT_BRACKET) : KC_MS_BTN4);
+                register_code16(detected_host_os() == OS_IOS ? G(KC_RIGHT_BRACKET) : KC_MS_BTN5);
             } else {
-                unregister_code16(detected_host_os() == OS_IOS ? G(KC_RIGHT_BRACKET) : KC_MS_BTN4);
+                unregister_code16(detected_host_os() == OS_IOS ? G(KC_RIGHT_BRACKET) : KC_MS_BTN5);
             }
             return false;
     }
