@@ -19,7 +19,11 @@
         "console": true,
         "extrakey": true,
         "mousekey": true,
-        "nkro": true
+        "nkro": true,
+        "deferred_exec": true,
+        "rgblight": true,
+        "quantum_painter": true,
+        "pointing_device": true
     },
     "matrix_pins": {
         "direct": [
@@ -27,6 +31,15 @@
         ]
     },
     "processor": "STM32F103",
+    "rgblight": {
+        "driver": "custom",
+        "led_count": 1,
+        "animations": {
+            "breathing": true,
+            "rainbow_mood": true,
+            "rgb_test": true
+        }
+    },
     "url": "",
     "usb": {
         "device_version": "1.0.0",
