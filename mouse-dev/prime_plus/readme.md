@@ -6,7 +6,7 @@ The original firmware was read protected, so there's likely no going back to the
 
 Erased and flashed with a uf2boot bootloader adjusted for 12MHz HSE using stlink. A15 is connected to the USB D+ pullup (1.5K).
 
-* Keyboard Maintainer: [Dasky](https://github.com/Dasky)
+* Keyboard Maintainer: [Dasky](https://github.com/daskygit)
 * Hardware Supported: SteelSeries Prime+
 * Hardware Availability: https://steelseries.com/gaming-mice/prime-plus
 

@@ -60,82 +60,72 @@ const ld7032_write_direction_t direction = {
 #include "i2c_master.h"
 
 void ld7032_init(void) {
-  setPinOutput(OLED_RESET);
-  writePinLow(OLED_RESET);
-  wait_us(10); // min 1us
-  writePinHigh(OLED_RESET);
-  wait_ms(1); // min 1ms
-  setPinOutput(OLED_PWR);
-  writePinHigh(OLED_PWR);
-  wait_ms(10); // wait for psu to come up
-  i2c_init();
+    i2c_init();
 }
 
 void ld7032_test(void) {
+    uint8_t data[2] = {0};
 
-  uint8_t data[2] = {0};
+    i2c_writeReg(0x37 << 1, LD7032_REG_DISP_STBY_ON_OFF, &data[0], 1, 10);
 
-  i2c_writeReg(0x37 << 1, LD7032_REG_DISP_STBY_ON_OFF, &data[0], 1, 10);
+    i2c_writeReg(0x37 << 1, LD7032_REG_DISP_ON_OFF, &data[0], 1, 10);
 
-  i2c_writeReg(0x37 << 1, LD7032_REG_DISP_ON_OFF, &data[0], 1, 10);
+    data[0] = 0x5;
+    i2c_writeReg(0x37 << 1, LD7032_REG_DFRAME, &data[0], 1, 10);
 
-  data[0] = 0x5;
-  i2c_writeReg(0x37 << 1, LD7032_REG_DFRAME, &data[0], 1, 10);
+    i2c_writeReg(0x37 << 1, LD7032_REG_WRITE_DIRECTION, (uint8_t *)&direction, 1, 10);
 
-  i2c_writeReg(0x37 << 1, LD7032_REG_WRITE_DIRECTION, (uint8_t *)&direction, 1,
-               10);
+    data[0] = 0x0;
+    i2c_writeReg(0x37 << 1, LD7032_REG_DISP_DIRECTION, &data[0], 1, 10);
 
-  data[0] = 0x0;
-  i2c_writeReg(0x37 << 1, LD7032_REG_DISP_DIRECTION, &data[0], 1, 10);
+    data[0] = 0 + 16;
+    data[1] = 0x5f + 16;
+    i2c_writeReg(0x37 << 1, LD7032_REG_DISP_SIZE_X, &data[0], 2, 10);
 
-  data[0] = 0 + 16;
-  data[1] = 0x5f + 16;
-  i2c_writeReg(0x37 << 1, LD7032_REG_DISP_SIZE_X, &data[0], 2, 10);
+    data[0] = 0 + 16;
+    data[1] = 23 + 16;
+    i2c_writeReg(0x37 << 1, LD7032_REG_DISP_SIZE_Y, &data[0], 2, 10);
 
-  data[0] = 0 + 16;
-  data[1] = 23 + 16;
-  i2c_writeReg(0x37 << 1, LD7032_REG_DISP_SIZE_Y, &data[0], 2, 10);
+    data[0] = 0x70;
+    i2c_writeReg(0x37 << 1, LD7032_REG_X_DISP_START, &data[0], 1, 10);
 
-  data[0] = 0x70;
-  i2c_writeReg(0x37 << 1, LD7032_REG_X_DISP_START, &data[0], 1, 10);
+    data[0] = 0x19;
+    i2c_writeReg(0x37 << 1, LD7032_REG_Y_DISP_START, &data[0], 1, 10);
 
-  data[0] = 0x19;
-  i2c_writeReg(0x37 << 1, LD7032_REG_Y_DISP_START, &data[0], 1, 10);
+    data[0] = 0x1F;
+    i2c_writeReg(0x37 << 1, LD7032_REG_PEAK_WIDTH, &data[0], 1, 10);
 
-  data[0] = 0x1F;
-  i2c_writeReg(0x37 << 1, LD7032_REG_PEAK_WIDTH, &data[0], 1, 10);
+    data[0] = 0x05;
+    i2c_writeReg(0x37 << 1, LD7032_REG_PEAK_DELAY, &data[0], 1, 10);
 
-  data[0] = 0x05;
-  i2c_writeReg(0x37 << 1, LD7032_REG_PEAK_DELAY, &data[0], 1, 10);
+    // data[0] = 16;
+    // i2c_writeReg(0x37 << 1, LD7032_REG_PRE_C_WIDTH, &data[0], 1, 10);
 
-  // data[0] = 16;
-  // i2c_writeReg(0x37 << 1, LD7032_REG_PRE_C_WIDTH, &data[0], 1, 10);
+    data[0] = 0x1;
+    i2c_writeReg(0x37 << 1, LD7032_REG_SCAN_MODE, &data[0], 1, 10);
 
-  data[0] = 0x1;
-  i2c_writeReg(0x37 << 1, LD7032_REG_SCAN_MODE, &data[0], 1, 10);
+    data[0] = 0x1f; // 3f
+    i2c_writeReg(0x37 << 1, LD7032_REG_DOT_CURRENT, &data[0], 1, 10);
 
-  data[0] = 0x1f; // 3f
-  i2c_writeReg(0x37 << 1, LD7032_REG_DOT_CURRENT, &data[0], 1, 10);
+    data[0] = 0x01;
+    i2c_writeReg(0x37 << 1, LD7032_REG_VDD_SEL, &data[0], 1, 10);
 
-  data[0] = 0x01;
-  i2c_writeReg(0x37 << 1, LD7032_REG_VDD_SEL, &data[0], 1, 10);
+    const uint8_t empty[128 * 40 / 8] = {0};
+    i2c_writeReg(0x37 << 1, LD7032_REG_DATA_RW, &empty[0], sizeof(empty), 200);
 
-  const uint8_t empty[128 * 40 / 8] = {0};
-  i2c_writeReg(0x37 << 1, LD7032_REG_DATA_RW, &empty[0], sizeof(empty), 200);
+    data[0] = 0x0;
+    i2c_writeReg(0x37 << 1, LD7032_REG_X_BOX_ADR_START, &data[0], 1, 10);
 
-  data[0] = 0x0;
-  i2c_writeReg(0x37 << 1, LD7032_REG_X_BOX_ADR_START, &data[0], 1, 10);
+    data[0] = 0x0B; //
+    i2c_writeReg(0x37 << 1, LD7032_REG_X_BOX_ADR_END, &data[0], 1, 10);
 
-  data[0] = 0x0B; //
-  i2c_writeReg(0x37 << 1, LD7032_REG_X_BOX_ADR_END, &data[0], 1, 10);
+    data[0] = 0x0;
+    i2c_writeReg(0x37 << 1, LD7032_REG_Y_BOX_ADR_START, &data[0], 1, 10);
 
-  data[0] = 0x0;
-  i2c_writeReg(0x37 << 1, LD7032_REG_Y_BOX_ADR_START, &data[0], 1, 10);
+    data[0] = 0x18;
+    i2c_writeReg(0x37 << 1, LD7032_REG_Y_BOX_ADR_END, &data[0], 1, 10);
 
-  data[0] = 0x18;
-  i2c_writeReg(0x37 << 1, LD7032_REG_Y_BOX_ADR_END, &data[0], 1, 10);
-
-  // clang-format off
+    // clang-format off
   static const uint8_t prime[]={
      0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00, 0x00, 0x00,
      0x01, 0x24, 0x90, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -182,5 +172,5 @@ void ld7032_test(void) {
 
   // i2c_writeReg(0x37 << 1, LD7032_REG_DISP_ON_OFF, (uint8_t *)0, 1, 10);
 
-  //i2c_stop();
+  // i2c_stop();
 }

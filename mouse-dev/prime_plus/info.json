@@ -3,6 +3,16 @@
     "keyboard_name": "Prime+",
     "maintainer": "Dasky",
     "bootloader": "uf2boot",
+    "build": {
+        "debounce_type": "asym_eager_defer_pk",
+        "lto": true
+    },
+    "encoder": {
+        "enabled": true,
+        "rotary": [
+            {"pin_a": "B5", "pin_b": "B4", "resolution": 2}
+        ]
+    },
     "features": {
         "bootmagic": true,
         "command": false,
@@ -14,16 +24,6 @@
     "matrix_pins": {
         "direct": [
             ["A0", "C15", "A1", "C13", "C14", "A3"]
-        ]
-    },
-    "encoder": {
-        "enabled": true,
-        "rotary": [
-            {
-                "pin_a": "B5",
-                "pin_b": "B4",
-                "resolution": 2
-            }
         ]
     },
     "processor": "STM32F103",
