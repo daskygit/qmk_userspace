@@ -3,4 +3,6 @@
 #include "dasky.h"
 #include "combos.h"
 
-
+#ifdef TAP_DANCE_ENABLE
+#include "tap_dances.c"
+#endif

@@ -22,9 +22,6 @@ ifeq ($(strip $(CUSTOM_TAP_CODE_ENABLE)), yes)
 	OPT_DEFS += -DCUSTOM_TAP_CODE_ENABLE
     SRC += tap_codes.c
 endif
-ifeq ($(strip $(TAP_DANCE_ENABLE)), yes)
-    SRC += tap_dances.c
-endif
 ifeq ($(strip $(USBPD_ENABLE)), yes)
     SRC += usbpd_bits.c
 endif

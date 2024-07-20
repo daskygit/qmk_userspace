@@ -1,6 +1,5 @@
 // Copyright 2021 Dasky (@daskygit)
-// SPDX-License-Identifier: GPL-2.0-or-later
-#include "dasky.h"
+// SPDX-License-Identifier: GPL-2.0-or-latera
 #include "tap_dances.h"
 
 void vol_finished(tap_dance_state_t *state, void *user_data) {
