@@ -27,6 +27,8 @@
 // R1 GP29 - motion
 // C1 GP27 - tx/rx
 
+#define USB_VBUS_PIN GP19
+
 #define SERIAL_USART_SPEED 1500000
 #define SERIAL_USART_TIMEOUT 5
 #define SERIAL_USART_FULL_DUPLEX
