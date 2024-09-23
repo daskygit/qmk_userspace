@@ -50,7 +50,7 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
         mouse_report.x = 0;
         mouse_report.y = 0;
     }
-    if (abs(mouse_report.x) > 1 || abs(mouse_report.y) > 1) {
+    if (abs(mouse_report.x) > 2 || abs(mouse_report.y) > 2) {
         if (get_highest_layer(layer_state) == _QWERTY) {
             layer_on(_POINTING);
         }
