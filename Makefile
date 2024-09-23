@@ -51,6 +51,7 @@ LINKED_BOARD_DEFS := \
 	g303!keyboards/logitech/g303!default!mouse-dev/g303 \
 	cp!keyboards/mb/cp!dasky!keyboards-dev/cp \
 	sp!keyboards/dasky/sp!default!keyboards-dev/sp \
+	halved!keyboards/dasky/halved!default!mouse-dev/halved \
 
 keyboards_folder := keyboards/
 empty :=
