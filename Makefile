@@ -48,7 +48,6 @@ LINKED_BOARD_DEFS := \
 	nah!keyboards/dasky/nah!dasky!keyboards-dev/nah \
 	echo!keyboards/dasky/echo!dasky!keyboards-dev/echo \
 	stinky!keyboards/stinky!default!keyboards-dev/stinky \
-	prime!keyboards/steelseries/prime_plus!default!mouse-dev/prime_plus \
 	g303!keyboards/logitech/g303!default!mouse-dev/g303 \
 	cp!keyboards/mb/cp!dasky!keyboards-dev/cp \
 	sp!keyboards/dasky/sp!default!keyboards-dev/sp \
