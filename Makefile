@@ -52,6 +52,8 @@ LINKED_BOARD_DEFS := \
 	cp!keyboards/mb/cp!dasky!keyboards-dev/cp \
 	sp!keyboards/dasky/sp!default!keyboards-dev/sp \
 	halved!keyboards/dasky/halved!default!mouse-dev/halved \
+	cirque!keyboards/cirque_gen4_dev_kit!default!mouse-dev/cirque_gen4_dev_kit \
+
 
 keyboards_folder := keyboards/
 empty :=
