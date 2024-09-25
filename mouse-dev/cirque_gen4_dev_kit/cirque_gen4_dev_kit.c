@@ -23,7 +23,7 @@ void i2c_init(void) {
         chThdSleepMilliseconds(10);
         palSetLineMode(I2C1_SCL_PIN, I2C1_SCL_PAL_MODE);
         palSetLineMode(I2C1_SDA_PIN, I2C1_SDA_PAL_MODE);
-        PORTB->PCR[0] |= PORTx_PCRn_ODE;
-        PORTB->PCR[1] |= PORTx_PCRn_ODE;
+        PORTB->PCR[2] |= PORTx_PCRn_ODE;
+        PORTB->PCR[3] |= PORTx_PCRn_ODE;
     }
 }
