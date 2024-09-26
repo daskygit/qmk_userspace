@@ -6,9 +6,9 @@
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
-        QK_REBOOT,
-        QK_BOOTLOADER,
-        KC_A
+        MS_BTN1,
+        MS_BTN3,
+        MS_BTN2
     )
 };
 // clang-format on
