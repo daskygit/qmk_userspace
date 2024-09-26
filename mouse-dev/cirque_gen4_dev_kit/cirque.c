@@ -11,7 +11,7 @@
 #define CIRQUE_RUSHMORE_EXT_WRITE_ADDR 0x0900
 #define CIRQUE_RUSHMORE_TIMEOUT 50
 
-#define CIRQUE_RUSHMORE_COMBINE_H_L_BYTES(h, l) ((int16_t)(h << 8) | l)
+#define CIRQUE_RUSHMORE_COMBINE_H_L_BYTES(h, l) ((uint16_t)(h << 8) | l)
 
 typedef struct PACKED {
     uint8_t length_low_byte;
