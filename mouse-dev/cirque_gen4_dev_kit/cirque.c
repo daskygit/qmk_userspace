@@ -11,6 +11,8 @@
 #define CIRQUE_RUSHMORE_EXT_WRITE_ADDR 0x0900
 #define CIRQUE_RUSHMORE_TIMEOUT 50
 
+#define CIRQUE_RUSHMORE_COMBINE_H_L_BYTES(h, l) ((int16_t)(h << 8) | l)
+
 typedef struct PACKED {
     uint8_t length_low_byte;
     uint8_t length_high_byte;
@@ -37,11 +39,7 @@ typedef struct PACKED {
 typedef struct PACKED {
     cirque_rushmore_descriptor_t  descriptor;
     uint8_t                       num_contacts;
-    cirque_rushmore_finger_data_t finger_0_data;
-    cirque_rushmore_finger_data_t finger_1_data;
-    cirque_rushmore_finger_data_t finger_2_data;
-    cirque_rushmore_finger_data_t finger_3_data;
-    cirque_rushmore_finger_data_t finger_4_data;
+    cirque_rushmore_finger_data_t finger_data[5];
     uint8_t                       buttons_data;
     uint8_t                       unused[23];
 } cirque_rushmore_absolute_position_data_t;
@@ -87,6 +85,17 @@ typedef enum {
     cirque_rushmore_right_arrow = 0x4f,
     cirque_rushmore_left_arrow  = 0x50,
 } cirque_rushmore_keycodes_t;
+
+typedef struct PACKED {
+    bool    primary_feed_enable : 1;      // enables touch reporting
+    uint8_t primary_feed_type : 1;        // 0 = relative (mouse), 1 = absolute
+    bool    abs_xyzz_enable : 1;          // enables proprietary XYZZ packet format for absolute mode
+    bool    secondary_feed_enable : 1;    // RESERVED
+    uint8_t secondary_feed_type : 1;      // 0 = relative (mouse), 1 = absolute
+    bool    lock_data_port : 1;           // locks feed data port specified below
+    uint8_t lock_data_port_pri0_sec1 : 1; // 0 = primary, 1 = secondary
+    bool    calibrate : 1;                // force sensor calibration
+} cirque_rushmore_feedconfig1_t;
 
 uint8_t cirque_rushmore_checksum(uint8_t length, uint8_t *data) {
     uint8_t return_checksum = 0;
@@ -161,14 +170,11 @@ i2c_status_t cirque_rushmore_get_report(report_mouse_t *mouse_report) {
 
 void pointing_device_driver_init(void) {
     i2c_init();
-    // Write 0x03 in register 0xC2C4 to enter Absolute mode.
-    // Write 0x01 to register 0xC2C4 to enter Relative mode.
-    // uint8_t mode = 0x3;
-    // cirque_rushmore_extended_write(0xC2C4, 1, &mode);
-    // uint8_t data;
-    // cirque_rushmore_extended_read(0xC2C4, 1, &data);
-    // uint8_t data[2];
-    // cirque_rushmore_extended_read(0xC2D2, 2, data);
+    cirque_rushmore_feedconfig1_t config;
+    cirque_rushmore_extended_read(0xC2C4, 1, (uint8_t *)&config);
+    config.primary_feed_enable = 1;
+    config.primary_feed_type   = 0;
+    cirque_rushmore_extended_write(0xC2C4, 1, (uint8_t *)&config);
 }
 
 report_mouse_t pointing_device_driver_get_report(report_mouse_t mouse_report) {
@@ -180,3 +186,37 @@ uint16_t pointing_device_driver_get_cpi(void) {
     return 0;
 }
 void pointing_device_driver_set_cpi(uint16_t cpi) {}
+
+#include "digitizer.h"
+i2c_status_t cirque_rushmore_get_digitizer_report(digitizer_t *digitizer_report) {
+    cirque_rushmore_descriptor_t descriptor;
+    i2c_read_register16(CIRQUE_RUSHMORE_ADDR, 0x0001, (uint8_t *)&descriptor, sizeof(descriptor), CIRQUE_RUSHMORE_TIMEOUT);
+    if (descriptor.report_id == 9) {
+        cirque_rushmore_absolute_position_data_t absolute_data;
+        i2c_read_register16(CIRQUE_RUSHMORE_ADDR, 0x0001, (uint8_t *)&absolute_data, sizeof(absolute_data), CIRQUE_RUSHMORE_TIMEOUT);
+        if (absolute_data.descriptor.report_id == 9) {
+            for (uint8_t i = 0; i < 5; i++) {
+                digitizer_report->contacts[i].type       = absolute_data.finger_data[i].palm.palm_reject ? UNKNOWN : FINGER;
+                digitizer_report->contacts[i].amplitude  = 1;
+                digitizer_report->contacts[i].confidence = absolute_data.finger_data[i].palm.touch_confidence;
+                digitizer_report->contacts[i].x          = CIRQUE_RUSHMORE_COMBINE_H_L_BYTES(absolute_data.finger_data[i].x_high, absolute_data.finger_data[i].x_low);
+                digitizer_report->contacts[i].y          = CIRQUE_RUSHMORE_COMBINE_H_L_BYTES(absolute_data.finger_data[i].y_high, absolute_data.finger_data[i].y_low);
+            }
+        }
+    }
+    return I2C_STATUS_SUCCESS;
+}
+
+digitizer_t digitizer_driver_get_report(digitizer_t digitizer_report) {
+    cirque_rushmore_get_digitizer_report(&digitizer_report);
+    return digitizer_report;
+}
+
+void digitizer_driver_init(void) {
+    i2c_init();
+    cirque_rushmore_feedconfig1_t config;
+    cirque_rushmore_extended_read(0xC2C4, 1, (uint8_t *)&config);
+    config.primary_feed_enable = 1;
+    config.primary_feed_type   = 1;
+    cirque_rushmore_extended_write(0xC2C4, 1, (uint8_t *)&config);
+}
