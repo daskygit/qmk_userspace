@@ -189,21 +189,21 @@ void pointing_device_driver_set_cpi(uint16_t cpi) {}
 
 #include "digitizer.h"
 i2c_status_t cirque_rushmore_get_digitizer_report(digitizer_t *digitizer_report) {
-    cirque_rushmore_descriptor_t descriptor;
-    i2c_read_register16(CIRQUE_RUSHMORE_ADDR, 0x0001, (uint8_t *)&descriptor, sizeof(descriptor), CIRQUE_RUSHMORE_TIMEOUT);
-    if (descriptor.report_id == 9) {
-        cirque_rushmore_absolute_position_data_t absolute_data;
-        i2c_read_register16(CIRQUE_RUSHMORE_ADDR, 0x0001, (uint8_t *)&absolute_data, sizeof(absolute_data), CIRQUE_RUSHMORE_TIMEOUT);
-        if (absolute_data.descriptor.report_id == 9) {
-            for (uint8_t i = 0; i < 5; i++) {
-                digitizer_report->contacts[i].type       = absolute_data.finger_data[i].palm.palm_reject ? UNKNOWN : FINGER;
-                digitizer_report->contacts[i].amplitude  = 1;
-                digitizer_report->contacts[i].confidence = absolute_data.finger_data[i].palm.touch_confidence;
-                digitizer_report->contacts[i].x          = CIRQUE_RUSHMORE_COMBINE_H_L_BYTES(absolute_data.finger_data[i].x_high, absolute_data.finger_data[i].x_low);
-                digitizer_report->contacts[i].y          = CIRQUE_RUSHMORE_COMBINE_H_L_BYTES(absolute_data.finger_data[i].y_high, absolute_data.finger_data[i].y_low);
-            }
+    // cirque_rushmore_descriptor_t descriptor;
+    // i2c_read_register16(CIRQUE_RUSHMORE_ADDR, 0x0001, (uint8_t *)&descriptor, sizeof(descriptor), CIRQUE_RUSHMORE_TIMEOUT);
+    // if (descriptor.report_id == 9) {
+    cirque_rushmore_absolute_position_data_t absolute_data;
+    i2c_read_register16(CIRQUE_RUSHMORE_ADDR, 0x0001, (uint8_t *)&absolute_data, sizeof(absolute_data), CIRQUE_RUSHMORE_TIMEOUT);
+    if (absolute_data.descriptor.report_id == 9) {
+        for (uint8_t i = 0; i < 5; i++) {
+            digitizer_report->contacts[i].type       = absolute_data.finger_data[i].palm.palm_reject ? UNKNOWN : FINGER;
+            digitizer_report->contacts[i].amplitude  = 1;
+            digitizer_report->contacts[i].confidence = absolute_data.finger_data[i].palm.touch_confidence;
+            digitizer_report->contacts[i].x          = CIRQUE_RUSHMORE_COMBINE_H_L_BYTES(absolute_data.finger_data[i].x_high, absolute_data.finger_data[i].x_low);
+            digitizer_report->contacts[i].y          = CIRQUE_RUSHMORE_COMBINE_H_L_BYTES(absolute_data.finger_data[i].y_high, absolute_data.finger_data[i].y_low);
         }
     }
+    // }
     return I2C_STATUS_SUCCESS;
 }
 
