@@ -5,10 +5,14 @@
 #include "pointing_device.h"
 #include "util.h"
 #include <string.h>
+#include "debug.h"
+#include "timer.h"
 
 #define CIRQUE_RUSHMORE_ADDR (0x2A << 1)
 #define CIRQUE_RUSHMORE_EXT_READ_ADDR 0x0901
 #define CIRQUE_RUSHMORE_EXT_WRITE_ADDR 0x0900
+#define CIRQUE_RUSHMORE_FEEDCONFIG1_ADDR 0xC2C4
+#define CIRQUE_RUSHMORE_FEEDCONFIG2_ADDR 0xC2C5
 #define CIRQUE_RUSHMORE_TIMEOUT 50
 
 #define CIRQUE_RUSHMORE_COMBINE_H_L_BYTES(h, l) ((uint16_t)(h << 8) | l)
@@ -96,6 +100,17 @@ typedef struct PACKED {
     uint8_t lock_data_port_pri0_sec1 : 1; // 0 = primary, 1 = secondary
     bool    calibrate : 1;                // force sensor calibration
 } cirque_rushmore_feedconfig1_t;
+
+typedef struct PACKED {
+    bool invert_x_data : 1;
+    bool invert_y_data : 1;
+    bool swap_xy : 1;
+    bool invert_y_pan : 1; // vertical scrolling invert
+    bool disable_coordinate_data : 1;
+    bool disable_button_data : 1;
+    bool keypad_available : 1;
+    bool keypad_enable : 1;
+} cirque_rushmore_feedconfig2_t;
 
 uint8_t cirque_rushmore_checksum(uint8_t length, uint8_t *data) {
     uint8_t return_checksum = 0;
@@ -196,12 +211,24 @@ i2c_status_t cirque_rushmore_get_digitizer_report(digitizer_t *digitizer_report)
     i2c_read_register16(CIRQUE_RUSHMORE_ADDR, 0x0001, (uint8_t *)&absolute_data, sizeof(absolute_data), CIRQUE_RUSHMORE_TIMEOUT);
     if (absolute_data.descriptor.report_id == 9) {
         for (uint8_t i = 0; i < 5; i++) {
-            digitizer_report->contacts[i].type       = absolute_data.finger_data[i].palm.palm_reject ? UNKNOWN : FINGER;
-            digitizer_report->contacts[i].amplitude  = 1;
-            digitizer_report->contacts[i].confidence = absolute_data.finger_data[i].palm.touch_confidence;
-            digitizer_report->contacts[i].x          = CIRQUE_RUSHMORE_COMBINE_H_L_BYTES(absolute_data.finger_data[i].x_high, absolute_data.finger_data[i].x_low);
-            digitizer_report->contacts[i].y          = CIRQUE_RUSHMORE_COMBINE_H_L_BYTES(absolute_data.finger_data[i].y_high, absolute_data.finger_data[i].y_low);
+            if (absolute_data.num_contacts & (1 << i)) {
+                digitizer_report->contacts[i].type       = absolute_data.finger_data[i].palm.palm_reject ? UNKNOWN : FINGER;
+                digitizer_report->contacts[i].amplitude  = 1;
+                digitizer_report->contacts[i].confidence = absolute_data.finger_data[i].palm.touch_confidence;
+                digitizer_report->contacts[i].x          = CIRQUE_RUSHMORE_COMBINE_H_L_BYTES(absolute_data.finger_data[i].x_high, absolute_data.finger_data[i].x_low);
+                digitizer_report->contacts[i].y          = CIRQUE_RUSHMORE_COMBINE_H_L_BYTES(absolute_data.finger_data[i].y_high, absolute_data.finger_data[i].y_low);
+            } else {
+                digitizer_report->contacts[i].type       = UNKNOWN;
+                digitizer_report->contacts[i].amplitude  = 0;
+                digitizer_report->contacts[i].confidence = 0;
+                digitizer_report->contacts[i].x          = 0;
+                digitizer_report->contacts[i].y          = 0;
+            }
         }
+
+        // dprintf("Finger 1 - T:%d C:%d X:%ul Y:%ul Timer: %ul.\n", digitizer_report->contacts[0].type, digitizer_report->contacts[0].confidence, digitizer_report->contacts[0].x, digitizer_report->contacts[0].y, timer_read());
+    } else {
+        dprintf("Wrong ReportID for absolute mode.\n");
     }
     // }
     return I2C_STATUS_SUCCESS;
@@ -215,8 +242,12 @@ digitizer_t digitizer_driver_get_report(digitizer_t digitizer_report) {
 void digitizer_driver_init(void) {
     i2c_init();
     cirque_rushmore_feedconfig1_t config;
-    cirque_rushmore_extended_read(0xC2C4, 1, (uint8_t *)&config);
+    cirque_rushmore_extended_read(CIRQUE_RUSHMORE_FEEDCONFIG1_ADDR, 1, (uint8_t *)&config);
     config.primary_feed_enable = 1;
     config.primary_feed_type   = 1;
-    cirque_rushmore_extended_write(0xC2C4, 1, (uint8_t *)&config);
+    cirque_rushmore_extended_write(CIRQUE_RUSHMORE_FEEDCONFIG1_ADDR, 1, (uint8_t *)&config);
+    cirque_rushmore_feedconfig2_t config2;
+    cirque_rushmore_extended_read(CIRQUE_RUSHMORE_FEEDCONFIG2_ADDR, 1, (uint8_t *)&config2);
+    config2.invert_x_data = true;
+    cirque_rushmore_extended_write(CIRQUE_RUSHMORE_FEEDCONFIG2_ADDR, 1, (uint8_t *)&config2);
 }
