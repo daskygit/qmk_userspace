@@ -151,6 +151,10 @@ i2c_status_t cirque_rushmore_get_report(report_mouse_t *mouse_report) {
             mouse_report->h       = mouse.pan_delta;
             mouse_report->v       = mouse.scroll_delta;
         }
+    } else if (descriptor.report_id == 8) {
+        cirque_rushmore_keyboard_packet_t keyboard;
+        i2c_read_register16(CIRQUE_RUSHMORE_ADDR, 0x0001, (uint8_t *)&keyboard, sizeof(keyboard), CIRQUE_RUSHMORE_TIMEOUT);
+        // do nothing with keycode report for the moment, just need to clear the queue
     }
     return I2C_STATUS_SUCCESS;
 }
