@@ -4,6 +4,7 @@
 #include QMK_KEYBOARD_H
 
 #include "dasky.h"
+#include "sensors/pmw33xx_common.h"
 
 enum keymap_layer { _POINTING = _ADJUST + 1 };
 
@@ -43,6 +44,11 @@ void housekeeping_task_keymap(void) {
     if (!mouse_button_held && IS_LAYER_ON(_POINTING) && last_pointing_device_activity_elapsed() > 900) {
         layer_off(_POINTING);
     }
+}
+
+report_mouse_t pointing_device_task_combined_kb(report_mouse_t left_report, report_mouse_t right_report) {
+    right_report = pointing_device_task_user(right_report);
+    return pointing_device_combine_reports(left_report, right_report);
 }
 
 report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
