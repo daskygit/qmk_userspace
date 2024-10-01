@@ -31,6 +31,13 @@
             "protocol": "serial"
         }
     },
+    "ps2": {
+        "clock_pin": "GP29",
+        "data_pin": "GP28",
+        "driver": "vendor",
+        "enabled": true,
+        "mouse_enabled": true
+    },
     "layouts": {
         "LAYOUT": {
             "layout": [
