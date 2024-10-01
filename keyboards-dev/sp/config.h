@@ -3,9 +3,10 @@
 
 #pragma once
 
-#define PS2_RDY GP28
-#define PS2_DATA GP29
-#define PS2_CLK GP6
+#define PS2_RDY GP6
+#define PS2_DATA GP28
+#define PS2_CLK GP29
+#define PS2_PIO_USE_PIO1
 
 #define TPS_RDY GP4
 #define TPS_SDA GP2
