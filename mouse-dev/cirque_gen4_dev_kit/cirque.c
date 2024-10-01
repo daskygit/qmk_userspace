@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "i2c_master.h"
-#include "pointing_device.h"
+#include "pointing_device/pointing_device.h"
 #include "util.h"
 #include <string.h>
 #include "debug.h"
@@ -202,7 +202,8 @@ uint16_t pointing_device_driver_get_cpi(void) {
 }
 void pointing_device_driver_set_cpi(uint16_t cpi) {}
 
-#include "digitizer.h"
+#ifdef DIGITIZER_ENABLE
+#    include "digitizer.h"
 i2c_status_t cirque_rushmore_get_digitizer_report(digitizer_t *digitizer_report) {
     // cirque_rushmore_descriptor_t descriptor;
     // i2c_read_register16(CIRQUE_RUSHMORE_ADDR, 0x0001, (uint8_t *)&descriptor, sizeof(descriptor), CIRQUE_RUSHMORE_TIMEOUT);
@@ -211,19 +212,20 @@ i2c_status_t cirque_rushmore_get_digitizer_report(digitizer_t *digitizer_report)
     i2c_read_register16(CIRQUE_RUSHMORE_ADDR, 0x0001, (uint8_t *)&absolute_data, sizeof(absolute_data), CIRQUE_RUSHMORE_TIMEOUT);
     if (absolute_data.descriptor.report_id == 9) {
         for (uint8_t i = 0; i < 5; i++) {
-            if (absolute_data.num_contacts & (1 << i)) {
-                digitizer_report->contacts[i].type       = absolute_data.finger_data[i].palm.palm_reject ? UNKNOWN : FINGER;
-                digitizer_report->contacts[i].amplitude  = 1;
-                digitizer_report->contacts[i].confidence = absolute_data.finger_data[i].palm.touch_confidence;
-                digitizer_report->contacts[i].x          = CIRQUE_RUSHMORE_COMBINE_H_L_BYTES(absolute_data.finger_data[i].x_high, absolute_data.finger_data[i].x_low);
-                digitizer_report->contacts[i].y          = CIRQUE_RUSHMORE_COMBINE_H_L_BYTES(absolute_data.finger_data[i].y_high, absolute_data.finger_data[i].y_low);
-            } else {
-                digitizer_report->contacts[i].type       = UNKNOWN;
-                digitizer_report->contacts[i].amplitude  = 0;
-                digitizer_report->contacts[i].confidence = 0;
-                digitizer_report->contacts[i].x          = 0;
-                digitizer_report->contacts[i].y          = 0;
-            }
+            // if (absolute_data.num_contacts & (1 << i)) {
+            digitizer_report->contacts[i].type       = absolute_data.finger_data[i].palm.palm_reject ? UNKNOWN : FINGER;
+            digitizer_report->contacts[i].amplitude  = 1;
+            digitizer_report->contacts[i].confidence = absolute_data.finger_data[i].palm.touch_confidence;
+            digitizer_report->contacts[i].x          = CIRQUE_RUSHMORE_COMBINE_H_L_BYTES(absolute_data.finger_data[i].x_high, absolute_data.finger_data[i].x_low);
+            digitizer_report->contacts[i].y          = CIRQUE_RUSHMORE_COMBINE_H_L_BYTES(absolute_data.finger_data[i].y_high, absolute_data.finger_data[i].y_low);
+            // }
+            // else {
+            //     digitizer_report->contacts[i].type       = UNKNOWN;
+            //     digitizer_report->contacts[i].amplitude  = 0;
+            //     digitizer_report->contacts[i].confidence = 0;
+            //     digitizer_report->contacts[i].x          = 0;
+            //     digitizer_report->contacts[i].y          = 0;
+            // }
         }
 
         // dprintf("Finger 1 - T:%d C:%d X:%ul Y:%ul Timer: %ul.\n", digitizer_report->contacts[0].type, digitizer_report->contacts[0].confidence, digitizer_report->contacts[0].x, digitizer_report->contacts[0].y, timer_read());
@@ -238,7 +240,7 @@ digitizer_t digitizer_driver_get_report(digitizer_t digitizer_report) {
     cirque_rushmore_get_digitizer_report(&digitizer_report);
     return digitizer_report;
 }
-
+#endif
 void digitizer_driver_init(void) {
     i2c_init();
     cirque_rushmore_feedconfig1_t config;
