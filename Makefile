@@ -53,6 +53,10 @@ LINKED_BOARD_DEFS := \
 	sp!keyboards/dasky/sp!default!keyboards-dev/sp \
 	halved!keyboards/dasky/halved!default!mouse-dev/halved \
 	cirque!keyboards/cirque_gen4_dev_kit!default!mouse-dev/cirque_gen4_dev_kit \
+	pr!keyboards/pointright!default!keyboards-dev/pointright \
+	pl!keyboards/pointleft!default!keyboards-dev/pointleft \
+
+
 
 
 keyboards_folder := keyboards/

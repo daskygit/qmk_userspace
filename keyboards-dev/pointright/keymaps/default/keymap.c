@@ -4,7 +4,14 @@
 #include "pointing_device.h"
 #include QMK_KEYBOARD_H
 
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {[0] = LAYOUT(QK_BOOT, QK_BOOT, KC_MS_BTN1, KC_MS_BTN2, KC_MS_BTN1, KC_MS_BTN2)};
+// clang-format off
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+    [0] = LAYOUT(
+                  QK_BOOT,
+    KC_MS_BTN1,   KC_MS_BTN2
+    )
+};
+// clang-format on
 
 void keyboard_post_init_user(void) {
     // Customise these values to desired behaviour
@@ -84,7 +91,7 @@ const azoteq_iqs5xx_device_config_t azoteq_iqs5xx_device_config_right = {
 
 const pointing_device_config_t pointing_device_configs[POINTING_DEVICE_COUNT] = {
     [0] = {.driver = &azoteq_iqs5xx_driver_default, .comms_config = &azoteq_iqs5xx_i2c_config_default, .device_config = &azoteq_iqs5xx_device_config_left, .side = PD_SIDE_LEFT, .throttle = 1, .rotation = PD_ROTATE_0, .motion = {.pin = TPS_RDY, .active_low = false}},
-    [1] = {.driver = &azoteq_iqs5xx_driver_default, .comms_config = &azoteq_iqs5xx_i2c_config_default, .device_config = &azoteq_iqs5xx_device_config_right, .side = PD_SIDE_RIGHT, .throttle = 0, .rotation = PD_ROTATE_180, .motion = {.pin = TPS_RDY, .active_low = false}},
+    [1] = {.driver = &azoteq_iqs5xx_driver_default, .comms_config = &azoteq_iqs5xx_i2c_config_default, .device_config = &azoteq_iqs5xx_device_config_right, .side = PD_SIDE_RIGHT, .throttle = 1, .rotation = PD_ROTATE_180, .motion = {.pin = TPS_RDY, .active_low = false}},
     [2] = {.driver = &cirque_driver_spi_default, .comms_config = &cirque_config_spi_default, .device_config = &cirque_device_config_default, .side = PD_SIDE_LEFT, .throttle = 1, .rotation = PD_ROTATE_270, .motion = {.pin = CIRQUE_RDY, .active_low = false}},
 };
 #endif
