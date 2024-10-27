@@ -47,7 +47,9 @@ void housekeeping_task_keymap(void) {
 }
 
 report_mouse_t pointing_device_task_combined_kb(report_mouse_t left_report, report_mouse_t right_report) {
-    right_report = pointing_device_task_user(right_report);
+    right_report = pointing_device_task_kb(right_report);
+    left_report  = pointing_device_task_kb(left_report);
+
     return pointing_device_combine_reports(left_report, right_report);
 }
 
@@ -56,7 +58,7 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
         mouse_report.x = 0;
         mouse_report.y = 0;
     }
-    if (abs(mouse_report.x) > 2 || abs(mouse_report.y) > 2) {
+    if (abs(mouse_report.x) > 1 || abs(mouse_report.y) > 1) {
         if (get_highest_layer(layer_state) == _QWERTY) {
             layer_on(_POINTING);
         }
