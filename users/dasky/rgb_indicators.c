@@ -14,7 +14,6 @@
 #    define rgb_matrix_hsv_to_rgb hsv_to_rgb
 #endif
 
-
 #ifndef BLINK_DURATION
 #    define BLINK_DURATION 150
 #endif
@@ -77,7 +76,7 @@ void rgb_show_layer(uint8_t led_min, uint8_t led_max) {
                         case KC_S:
                         case KC_D:
 #    ifdef TAP_DANCE_ENABLE
-                        case (QK_TAP_DANCE | ((TD_GAME)&0xFF)):
+                        case (QK_TAP_DANCE | ((TD_GAME) & 0xFF)):
 #    endif
                             continue;
                         default:
@@ -109,6 +108,7 @@ void rgb_show_layer(uint8_t led_min, uint8_t led_max) {
                         case EH_RGHT:
                             hue = 0;
                             break;
+                        case GAMETOG:
                         case RGB_TOG ... RGB_SPD:
                             continue;
                         case WINR:
