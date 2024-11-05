@@ -5,12 +5,12 @@
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [_QWERTY]   = LAYOUT_wrapper(KEYS_36(QWERTY)),
-    [_COLEMAK]  = LAYOUT_wrapper(KEYS_36(COLEMAK)),
-    [_GAMING]   = LAYOUT_wrapper(KEYS_36(GAMING)),
-    [_LOWER]    = LAYOUT_wrapper(KEYS_36(LOWER)),
-    [_RAISE]    = LAYOUT_wrapper(KEYS_36(RAISE)),
-    [_ADJUST]   = LAYOUT_wrapper(KEYS_36(ADJUST))
+    [_QWERTY]   = LAYOUT_wrapper(KEYS_42(QWERTY)),
+    [_COLEMAK]  = LAYOUT_wrapper(KEYS_42(COLEMAK)),
+    [_GAMING]   = LAYOUT_wrapper(KEYS_42(GAMING)),
+    [_LOWER]    = LAYOUT_wrapper(KEYS_42(LOWER)),
+    [_RAISE]    = LAYOUT_wrapper(KEYS_42(RAISE)),
+    [_ADJUST]   = LAYOUT_wrapper(KEYS_42(ADJUST))
 };
 // clang-format on
 
@@ -27,6 +27,5 @@ void i2c_init(void) {
 
         palSetLineMode(I2C1_SCL_PIN, PAL_MODE_ALTERNATE_I2C | PAL_RP_PAD_SLEWFAST | PAL_RP_PAD_DRIVE4);
         palSetLineMode(I2C1_SDA_PIN, PAL_MODE_ALTERNATE_I2C | PAL_RP_PAD_SLEWFAST | PAL_RP_PAD_DRIVE4);
-
     }
 }
