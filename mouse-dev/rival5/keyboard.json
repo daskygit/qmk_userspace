@@ -1,0 +1,46 @@
+{
+    "manufacturer": "SteelSeries",
+    "keyboard_name": "Rival 5",
+    "maintainer": "daskygit",
+    "bootloader": "stm32-dfu",
+    "encoder": {
+        "rotary": [
+            {"pin_a": "A8", "pin_b": "A9", "resolution": 2}
+        ]
+    },
+    "features": {
+        "bootmagic": true,
+        "encoder": true,
+        "extrakey": true,
+        "mousekey": true,
+        "pointing_device": true,
+        "deferred_exec": true
+    },
+    "matrix_pins": {
+        "direct": [
+            ["B11", "B2", "B8", "B9", "A4", "A10", "B10", "A7", "A5"]
+        ]
+    },
+    "processor": "STM32F072",
+    "url": "",
+    "usb": {
+        "device_version": "1.0.0",
+        "pid": "0x0000",
+        "vid": "0xFEED"
+    },
+    "layouts": {
+        "LAYOUT": {
+            "layout": [
+                {"matrix": [0, 0], "x": 0, "y": 0},
+                {"matrix": [0, 1], "x": 3, "y": 0},
+                {"matrix": [0, 2], "x": 4, "y": 0},
+                {"matrix": [0, 3], "x": 5, "y": 0},
+                {"matrix": [0, 4], "x": 1, "y": 1},
+                {"matrix": [0, 5], "x": 2, "y": 1},
+                {"matrix": [0, 6], "x": 2, "y": 2},
+                {"matrix": [0, 7], "x": 4, "y": 1},
+                {"matrix": [0, 8], "x": 1, "y": 2}
+            ]
+        }
+    }
+}

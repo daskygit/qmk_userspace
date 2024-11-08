@@ -55,7 +55,7 @@ LINKED_BOARD_DEFS := \
 	cirque!keyboards/cirque_gen4_dev_kit!default!mouse-dev/cirque_gen4_dev_kit \
 	pr!keyboards/pointright!default!keyboards-dev/pointright \
 	pl!keyboards/pointleft!default!keyboards-dev/pointleft \
-
+	r5!keyboards/rival5!default!mouse-dev/rival5 \
 
 
 
