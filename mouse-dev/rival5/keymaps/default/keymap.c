@@ -10,7 +10,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // Back
     [0] = LAYOUT(
         QK_BOOT, MS_BTN1, MS_BTN3, MS_BTN2,
-        MS_BTN5, KC_A, KC_B, KC_C,
+        MS_BTN5, KC_VOLU, KC_VOLD, KC_MUTE,
         MS_BTN4
     )
 };
