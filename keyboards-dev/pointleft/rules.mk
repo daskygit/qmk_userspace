@@ -5,3 +5,6 @@ POINTING_DEVICE_DRIVERS += cirque_pinnacle_spi
 
 POINTING_DEVICE_DRIVER = cirque_pinnacle_spi
 POINTING_DEVICE_ENABLE = yes
+
+DIGITIZER_DRIVER = azoteq_iqs5xx
+DIGITIZER_ENABLE = yes
