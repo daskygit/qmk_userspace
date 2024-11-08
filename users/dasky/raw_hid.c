@@ -40,13 +40,13 @@ void raw_hid_receive_kb(uint8_t* data, uint8_t length) {
 #    define RAW_GPU_TEMP data[7]
 #    define RAW_GPU_LOAD data[10]
 
-void raw_hid_receive(uint8_t* data, uint8_t length) {
+void raw_hid_receive_user(uint8_t* data, uint8_t length) {
 #endif
 #ifdef RGB_MATRIX_ENABLE
     if (RAW_DORGB == 1) {
         static uint16_t old_hue      = 0;
         static bool     changed_mode = false;
-        if (!changed_mode) {  // only change mode on first update
+        if (!changed_mode) { // only change mode on first update
             changed_mode = true;
             rgb_matrix_mode_noeeprom(RGB_MATRIX_HUE_WAVE);
         }
