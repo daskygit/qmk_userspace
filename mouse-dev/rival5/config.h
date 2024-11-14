@@ -1,0 +1,4 @@
+#pragma once
+
+#define POINTING_DEVICE_TASK_THROTTLE_MS 1
+#define DEBUG_MATRIX_SCAN_RATE

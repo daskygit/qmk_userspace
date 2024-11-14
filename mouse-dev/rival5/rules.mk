@@ -1,1 +1,3 @@
 POINTING_DEVICE_DRIVER = custom
+
+SRC += paw3335.c

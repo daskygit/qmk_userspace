@@ -10,7 +10,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // Back
     [0] = LAYOUT(
         QK_BOOT, MS_BTN1, MS_BTN3, MS_BTN2,
-        MS_BTN5, KC_VOLU, KC_VOLD, KC_MUTE,
+        MS_BTN5, KC_VOLU, KC_VOLD, QK_REBOOT,
         MS_BTN4
     )
 };
@@ -37,6 +37,6 @@ void pointing_device_init_kb(void) {
 
 #if defined(ENCODER_MAP_ENABLE)
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
-    [0] = {ENCODER_CCW_CW(MS_WHLU, MS_WHLD)},
+    [0] = {ENCODER_CCW_CW(MS_WHLD, MS_WHLU)},
 };
 #endif
