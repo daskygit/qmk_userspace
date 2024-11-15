@@ -40,26 +40,33 @@ void keyboard_post_init_user(void) {
 
     i2c_init();
     uint8_t data = 0;
-    i2c_writeReg(AW21036_ADDR, 0x7F, &data, 1, AW21036_TIMEOUT);
+    i2c_write_register(AW21036_ADDR, 0x7F, &data, 1, AW21036_TIMEOUT);
     wait_ms(5);
     data = 0x07;
-    i2c_writeReg(AW21036_ADDR, 0x7C, &data, 1, AW21036_TIMEOUT);
-    i2c_writeReg(AW21036_ADDR, 0x70, (uint8_t *)0x80, 1, AW21036_TIMEOUT);
-    i2c_writeReg(AW21036_ADDR, 0x78, (uint8_t *)0x1C, 1, AW21036_TIMEOUT);
-    i2c_writeReg(AW21036_ADDR, 0x6E, (uint8_t *)0xFF, 1, AW21036_TIMEOUT);
-    i2c_writeReg(AW21036_ADDR, 0x90, (uint8_t *)0x37, 1, AW21036_TIMEOUT);
-    i2c_writeReg(AW21036_ADDR, 0x91, (uint8_t *)0x37, 1, AW21036_TIMEOUT);
-    i2c_writeReg(AW21036_ADDR, 0x92, (uint8_t *)0xFF, 1, AW21036_TIMEOUT);
+    i2c_write_register(AW21036_ADDR, 0x7C, &data, 1, AW21036_TIMEOUT);
+    data = 0x80;
+    i2c_write_register(AW21036_ADDR, 0x70, &data, 1, AW21036_TIMEOUT);
+    data = 0x1C;
+    i2c_write_register(AW21036_ADDR, 0x78, &data, 1, AW21036_TIMEOUT);
+    data = 0xFF;
+    i2c_write_register(AW21036_ADDR, 0x6E, &data, 1, AW21036_TIMEOUT);
+    data = 0x37;
+    i2c_write_register(AW21036_ADDR, 0x90, &data, 1, AW21036_TIMEOUT);
+    i2c_write_register(AW21036_ADDR, 0x91, &data, 1, AW21036_TIMEOUT);
+    data = 0xFF;
+    i2c_write_register(AW21036_ADDR, 0x92, &data, 1, AW21036_TIMEOUT);
 
     for (uint8_t i = 0x46; i <= 0x6D; i++) {
-        i2c_writeReg(AW21036_ADDR, i, (uint8_t *)0xFF, 1, AW21036_TIMEOUT);
+        i2c_write_register(AW21036_ADDR, i, &data, 1, AW21036_TIMEOUT);
     }
+    data = 0x01;
+    i2c_write_register(AW21036_ADDR, 0x00, &data, 1, AW21036_TIMEOUT);
 
-    i2c_writeReg(AW21036_ADDR, 0x00, (uint8_t *)0x01, 1, AW21036_TIMEOUT);
-
+    data           = 0x5f;
+    uint8_t data_2 = 0x00;
     for (uint8_t i = 0x01; i <= 0x24; i++) {
-        i2c_writeReg(AW21036_ADDR, i, (uint8_t *)0x5F, 1, AW21036_TIMEOUT);
-        i2c_writeReg(AW21036_ADDR, 0x49, (uint8_t *)0x00, 1, AW21036_TIMEOUT);
+        i2c_write_register(AW21036_ADDR, i, &data, 1, AW21036_TIMEOUT);
+        i2c_write_register(AW21036_ADDR, 0x49, &data_2, 1, AW21036_TIMEOUT);
     }
 }
 
@@ -79,6 +86,6 @@ void housekeeping_task_user(void) {
     if (timer_elapsed32(last_run) < 1000) return;
     last_run = timer_read32();
     // uint8_t      data   = 0;
-    // i2c_status_t status = i2c_writeReg(AW21036_ADDR, 0x7F, &data, 1, AW21036_TIMEOUT);
+    // i2c_status_t status = i2c_write_register(AW21036_ADDR, 0x7F, &data, 1, AW21036_TIMEOUT);
     // printf("i2c: %d\n", status);
 }
