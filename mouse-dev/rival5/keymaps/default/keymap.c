@@ -59,7 +59,7 @@ void keyboard_post_init_user(void) {
 
     for (uint8_t i = 0x01; i <= 0x24; i++) {
         i2c_writeReg(AW21036_ADDR, i, (uint8_t *)0x5F, 1, AW21036_TIMEOUT);
-        i2c_writeReg16(AW21036_ADDR, 0x49, (uint8_t *)0x00, 1, AW21036_TIMEOUT);
+        i2c_writeReg(AW21036_ADDR, 0x49, (uint8_t *)0x00, 1, AW21036_TIMEOUT);
     }
 }
 
