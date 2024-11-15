@@ -9,15 +9,16 @@ void board_init(void) {
 
 const aw21036_led_t q_aw21036_leds[AW21036_LED_COUNT] = {
     [0] = {.r = AW_BR2, .g = AW_BR5, .b = AW_BR8},    // wheel
-    [1] = {.r = AW_BR35, .g = AW_BR32, .b = AW_BR29}, // logo
-    [2] = {.r = AW_BR34, .g = AW_BR33, .b = AW_BR31}, // sl1
-    [3] = {.r = AW_BR30, .g = AW_BR28, .b = AW_BR27}, // sl2
-    [4] = {.r = AW_BR25, .g = AW_BR24, .b = AW_BR22}, // sl3
-    [5] = {.r = AW_BR21, .g = AW_BR19, .b = AW_BR18}, // sl4
-    [6] = {.r = AW_BR0, .g = AW_BR1, .b = AW_BR3},    // sr1
-    [7] = {.r = AW_BR4, .g = AW_BR6, .b = AW_BR7},    // sr2
-    [8] = {.r = AW_BR9, .g = AW_BR10, .b = AW_BR12},  // sr3
-    [9] = {.r = AW_BR13, .g = AW_BR15, .b = AW_BR16}  // sr4
+    [1] = {.r = AW_BR34, .g = AW_BR33, .b = AW_BR31}, // sl1
+    [2] = {.r = AW_BR30, .g = AW_BR28, .b = AW_BR27}, // sl2
+    [3] = {.r = AW_BR25, .g = AW_BR24, .b = AW_BR22}, // sl3
+    [4] = {.r = AW_BR21, .g = AW_BR19, .b = AW_BR18}, // sl4
+    [5] = {.r = AW_BR0, .g = AW_BR1, .b = AW_BR3},    // sr1
+    [6] = {.r = AW_BR4, .g = AW_BR6, .b = AW_BR7},    // sr2
+    [7] = {.r = AW_BR9, .g = AW_BR10, .b = AW_BR12},  // sr3
+    [8] = {.r = AW_BR13, .g = AW_BR15, .b = AW_BR16}, // sr4
+    [9] = {.r = AW_BR35, .g = AW_BR32, .b = AW_BR29}, // logo
+
 };
 
 // clang-format off

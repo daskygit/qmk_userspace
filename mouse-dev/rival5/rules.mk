@@ -1,7 +1,4 @@
 POINTING_DEVICE_DRIVER = custom
-RGB_MATRIX_DRIVER = custom
-RGBLIGHT_ENABLE = yes
-RGBLIGHT_DRIVER = custom
 
 SRC += paw3335.c
 SRC += aw21036.c

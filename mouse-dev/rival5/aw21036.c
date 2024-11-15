@@ -113,6 +113,7 @@ const rgblight_driver_t rgblight_driver = {
 #endif
 
 #ifdef RGB_MATRIX_ENABLE
+#    include "rgb_matrix_drivers.h"
 const rgb_matrix_driver_t rgb_matrix_driver = {
     .init          = aw21036_init,
     .flush         = aw21036_flush,
