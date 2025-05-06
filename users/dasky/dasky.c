@@ -37,6 +37,16 @@ char chordal_hold_handedness(keypos_t key) {
 #endif
 }
 
+uint16_t get_flow_tap_term(uint16_t keycode, keyrecord_t* record, uint16_t prev_keycode) {
+    if (is_flow_tap_key(keycode) && is_flow_tap_key(prev_keycode)) {
+        if (get_tap_keycode(prev_keycode) == KC_SPACE && keycode == MT_SLSH) {
+            return 0;
+        }
+        return FLOW_TAP_TERM;
+    }
+    return 0;
+}
+
 void keyboard_post_init_user(void) {
     // Customise these values to desired behaviour
     // debug_enable   = true;
