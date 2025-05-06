@@ -31,6 +31,12 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 __attribute__((weak)) void keyboard_post_init_keymap(void) {}
 
+char chordal_hold_handedness(keypos_t key) {
+#ifdef SPLIT_KEYBOARD
+    return key.row < MATRIX_ROWS / 2 ? 'L' : 'R';
+#endif
+}
+
 void keyboard_post_init_user(void) {
     // Customise these values to desired behaviour
     // debug_enable   = true;
@@ -75,19 +81,14 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t* record) {
     }
 }
 
-__attribute__((weak)) bool process_record_keymap(uint16_t keycode, keyrecord_t* record) {return true;}
+__attribute__((weak)) bool process_record_keymap(uint16_t keycode, keyrecord_t* record) {
+    return true;
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-
-        if (!process_record_keymap(keycode, record)) {
-        return false;
-        }
-
-#ifdef CUSTOM_TAP_CODE_ENABLE
-    if (!process_record_taps(keycode, record)) {
+    if (!process_record_keymap(keycode, record)) {
         return false;
     }
-#endif
 
     if (!process_record_autoshift(keycode, record)) {
         return false;

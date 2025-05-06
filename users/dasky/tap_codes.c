@@ -105,53 +105,6 @@ void tap_code16(uint16_t code) {
     tap_code_register((uint8_t)code, extract_mod_bits(code), TAP_CODE_DELAY, true);
 }
 
-#define CHECK_FOR_REGISTERED_MT(keycode) (keycode >= QK_MOD_TAP && keycode <= QK_MOD_TAP_MAX && (get_mods() & ((keycode & 0x0F00) >> 8)))
-
-bool process_record_taps(uint16_t keycode, keyrecord_t* record) {
-    static fast_timer_t last_interrupted = 0;
-    static fast_timer_t last_key_down    = 0;
-    switch (keycode) {
-        case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
-        case QK_MOD_TAP ... QK_MOD_TAP_MAX:
-            if (record->event.pressed && ((timer_elapsed_fast(last_interrupted) < TAPPING_TERM) || (timer_elapsed_fast(last_key_down) < 200) || CHECK_FOR_REGISTERED_MT(keycode))) {
-                tap_code_chord(keycode & 0xFF);
-                record->tap.count = 0xF;
-                last_interrupted  = timer_read_fast();
-                return false;
-            }
-            if (record->tap.count == 0xF) {
-                return false;
-            }
-            if (record->tap.count > 1 && (keycode == RAISER || keycode == RAISEL)) {
-                if (record->event.pressed) {
-                    register_code(keycode & 0xFF);
-                    return false;
-                } else {
-                    unregister_code(keycode & 0xFF);
-                    return false;
-                }
-            }
-            if (record->tap.count && record->event.pressed) {
-                if (keycode >= QK_MOD_TAP || keycode == RAISER || keycode == RAISEL) {
-                    tap_code_chord(keycode & 0xFF);
-                } else {
-                    tap_code(keycode & 0xFF);
-                }
-                return false;
-            } else if (record->tap.interrupted && (keycode >= QK_MOD_TAP || keycode == RAISER || keycode == RAISEL)) {
-                tap_code_chord(keycode & 0xFF);
-                last_interrupted = timer_read_fast();
-                return false;
-            }
-        default:
-            if (record->event.pressed) {
-                last_key_down = timer_read_fast();
-            }
-            break;
-    }
-    return true;
-}
-
 // Use send_string tables
 #define PGM_LOADBIT(mem, pos) ((pgm_read_byte(&((mem)[(pos) / 8])) >> ((pos) % 8)) & 0x01)
 
