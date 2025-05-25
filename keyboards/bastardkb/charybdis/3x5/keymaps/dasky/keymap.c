@@ -17,10 +17,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_RAISE]    = LAYOUT_wrapper(KEYS_35(RAISE)),
     [_ADJUST]   = LAYOUT_wrapper(KEYS_35(ADJUST)),
     [_POINTING] = LAYOUT(
-    QK_BOOT, XXXXXXX, XXXXXXX, DPI_MOD, S_D_MOD, S_D_MOD, DPI_MOD, XXXXXXX, XXXXXXX, QK_BOOT,
-    _______, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______,
-    _______, DRGSCRL, SNIPING, KC_BTN4, KC_BTN5, KC_BTN1, KC_BTN2, SNIPING, DRGSCRL, _______,
-                      KC_BTN2, KC_BTN1, _______, _______, _______
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+                      KC_BTN1, _______, _______, _______, KC_BTN2
   ),
 };
 // clang-format on
@@ -30,18 +30,20 @@ static bool     mouse_button_held      = false;
 extern void     last_pointing_device_activity_trigger(void);
 
 bool process_record_keymap(uint16_t keycode, keyrecord_t* record) {
-    if (!IS_MOUSE_KEYCODE(keycode) && !IS_KB_KEYCODE(keycode)) {
+    if (!IS_MOUSE_KEYCODE(keycode)) {
         last_keyboard_keypress = timer_read32();
         layer_off(_POINTING);
     } else {
-        mouse_button_held = record->event.pressed;
-        last_pointing_device_activity_trigger();
+        if (IS_MOUSE_KEYCODE(keycode)) {
+            mouse_button_held = record->event.pressed;
+            last_pointing_device_activity_trigger();
+        }
     }
     return true;
 }
 
 void housekeeping_task_keymap(void) {
-    if (!mouse_button_held && IS_LAYER_ON(_POINTING) && last_pointing_device_activity_elapsed() > 900) {
+    if (!mouse_button_held && IS_LAYER_ON(_POINTING) && last_pointing_device_activity_elapsed() > 1000) {
         layer_off(_POINTING);
     }
 }
@@ -50,19 +52,25 @@ report_mouse_t pointing_device_task_combined_kb(report_mouse_t left_report, repo
     right_report = pointing_device_task_kb(right_report);
     left_report  = pointing_device_task_kb(left_report);
 
-    return pointing_device_combine_reports(left_report, right_report);
-}
+    left_report.h = left_report.x;
+    left_report.v = -left_report.y;
+    left_report.x = 0;
+    left_report.y = 0;
 
-report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
     if (timer_elapsed32(last_keyboard_keypress) < 100) {
-        mouse_report.x = 0;
-        mouse_report.y = 0;
+        right_report.x = 0;
+        right_report.y = 0;
     }
-    if (abs(mouse_report.x) > 1 || abs(mouse_report.y) > 1) {
+    if (abs(right_report.x) > 1 || abs(right_report.y) > 1) {
         if (get_highest_layer(layer_state) == _QWERTY) {
             layer_on(_POINTING);
         }
     }
+
+    return pointing_device_combine_reports(left_report, right_report);
+}
+
+report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
     return mouse_report;
 }
 
