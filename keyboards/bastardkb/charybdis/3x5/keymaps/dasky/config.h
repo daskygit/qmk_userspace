@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 #pragma once
 
-// #define OVERRIDE_DEBOUNCE 2
+#define OVERRIDE_DEBOUNCE 7
 #define OVERRIDE_RGB_MATRIX_BRIGHTNESS 255
 
 #define MOUSE_EXT_REPORT

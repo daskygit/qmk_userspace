@@ -215,7 +215,7 @@ __attribute__((weak)) void housekeeping_task_keymap(void) {}
 
 void housekeeping_task_user(void) {
     static fast_timer_t throttle_timer = 0;
-    if (timer_elapsed_fast(throttle_timer) >= USB_POLLING_INTERVAL_MS) {
+    if (timer_elapsed_fast(throttle_timer) >= 1) {
         housekeeping_task_throttled();
         throttle_timer = timer_read_fast();
     }
