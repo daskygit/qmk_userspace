@@ -1,6 +1,7 @@
 // Copyright 2021 Dasky (@daskygit)
 // SPDX-License-Identifier: GPL-2.0-or-later
 #include "dasky.h"
+#include "raw_hid.h"
 
 uint8_t get_bar_bits(uint8_t load) {
     uint8_t temp = 0;

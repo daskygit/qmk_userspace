@@ -29,7 +29,7 @@ ifeq ($(strip $(OLED_ENABLE)), yes)
     SRC += oled.c
 endif
 ifeq ($(strip $(RAW_ENABLE)), yes)
-    SRC += raw_hid.c
+    SRC += raw_hid_receive.c
 endif
 ifeq ($(strip $(RGB_MATRIX_ENABLE)), yes)
     SRC += rgb_indicators.c
