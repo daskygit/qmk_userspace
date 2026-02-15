@@ -52,9 +52,9 @@ void mouse_scroll(bool horizontal, bool clockwise) {
     clockwise ? tap_code(KC_PGDOWN) : tap_code(KC_PGUP);
 #else
     if (horizontal) {
-        clockwise ? tap_code(KC_MS_WH_RIGHT) : tap_code(KC_MS_WH_LEFT);
+        clockwise ? tap_code(MS_WHLR) : tap_code(MS_WHLL);
     } else {
-        clockwise ? tap_code(KC_MS_WH_DOWN) : tap_code(KC_MS_WH_UP);
+        clockwise ? tap_code(MS_WHLD) : tap_code(MS_WHLU);
     }
 #endif
 }

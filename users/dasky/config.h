@@ -140,4 +140,4 @@
 #    define OLED_FONT_H "oled_font.h"
 #endif
 
-#define DYNAMIC_KEYMAP_LAYER_COUNT 6
+#define DYNAMIC_KEYMAP_LAYER_COUNT 7

@@ -32,17 +32,16 @@ with via enabled. The VIA application will not work as expected.
 void raw_hid_receive_kb(uint8_t* data, uint8_t length) {
 #else
 
-#    define RAW_HUE data[2]
-#    define RAW_SAT data[3]
-#    define RAW_VAL data[4]
-#    define RAW_DORGB data[5]
-#    define RAW_CPU_TEMP data[6]
-#    define RAW_CPU_LOAD data[9]
-#    define RAW_GPU_TEMP data[7]
-#    define RAW_GPU_LOAD data[10]
-
 void raw_hid_receive_user(uint8_t* data, uint8_t length) {
 #endif
+#define RAW_HUE data[2]
+#define RAW_SAT data[3]
+#define RAW_VAL data[4]
+#define RAW_DORGB data[5]
+#define RAW_CPU_TEMP data[6]
+#define RAW_CPU_LOAD data[9]
+#define RAW_GPU_TEMP data[7]
+#define RAW_GPU_LOAD data[10]
 #ifdef RGB_MATRIX_ENABLE
     if (RAW_DORGB == 1) {
         static uint16_t old_hue      = 0;

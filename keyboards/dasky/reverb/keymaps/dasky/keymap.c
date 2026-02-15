@@ -108,3 +108,15 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 }
+
+char chordal_hold_handedness(keypos_t key) {
+    switch (key.row) {
+        case 0 ... 2:
+            return 'L';
+        case 3 ... 5:
+            return 'R';
+        case 6:
+            return key.col < 3 ? 'L':'R';
+    }
+    return key.row < MATRIX_ROWS / 2 ? 'L' : 'R';
+}

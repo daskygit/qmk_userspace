@@ -106,6 +106,21 @@
    k30, k31, k32, k33, k34, k35,            k36, k37, k38, k39, k3a, k3b, \
                        k42, k43, k44,  k47, k48, k49
 
+#define LILY(k) lily_adapt(k)
+#define lily_adapt( \
+   k00, k01, k02, k03, k04, k05, k06, k07, k08, k09, k0a, k0b, \
+   k10, k11, k12, k13, k14, k15, k16, k17, k18, k19, k1a, k1b, \
+   k20, k21, k22, k23, k24, k25, k26, k27, k28, k29, k2a, k2b, \
+   k30, k31, k32, k33, k34, k35, k36, k37, k38, k39, k3a, k3b, \
+   k40, k41, k42, k43, k44, k45, k46, k47, k48, k49, k4a, k4b  \
+) \
+   k00, k01, k02, k03, k04, k05,            k06, k07, k08, k09, k0a, k0b, \
+   k10, k11, k12, k13, k14, k15,            k16, k17, k18, k19, k1a, k1b, \
+   k20, k21, k22, k23, k24, k25,            k26, k27, k28, k29, k2a, k2b, \
+   k30, k31, k32, k33, k34, k35, k45,  k46, k36, k37, k38, k39, k3a, k3b, \
+                  k41, k42, k43, k44,  k47, k48, k49, k4a, \
+                  k45, k46
+
 
 #define CTLNUBS     MT(MOD_LCTL, KC_NUBS)
 #define ALTSPC      MT(MOD_LALT, KC_SPC)
@@ -208,15 +223,15 @@
 #define RAISE_L_EX _______, _______
 #define RAISE_L_EC KC_HOME
 
-#define RAISE_R_TB KC_BTN1, ADJUSTR, KC_BTN2
+#define RAISE_R_TB MS_BTN1, ADJUSTR, MS_BTN2
 #define RAISE_R_EX _______, _______
 #define RAISE_R_EC KC_HOME
 
 #define RAISE \
     _______, _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______, \
-    KC_ESC , XXXXXXX, KC_BSPC, KC_UP  , KC_ENT , WINR   ,           KC_ACL0, XXXXXXX, KC_MS_U, XXXXXXX, XXXXXXX, _______, \
-    _______, XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX,           KC_ACL1, KC_MS_L, KC_MS_D, KC_MS_R, KC_PSCR, XXXXXXX, \
-    _______, _______, _______, _______, _______, _______,           KC_ACL2, XXXXXXX, KC_MPLY, KC_MNXT, CTALDEL, KC_RSFT, \
+    KC_ESC , XXXXXXX, KC_BSPC, KC_UP  , KC_ENT , WINR   ,           MS_ACL0, XXXXXXX, MS_UP  , XXXXXXX, XXXXXXX, _______, \
+    _______, XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX,           MS_ACL1, MS_LEFT, MS_DOWN, MS_RGHT, KC_PSCR, XXXXXXX, \
+    _______, _______, _______, _______, _______, _______,           MS_ACL2, XXXXXXX, KC_MPLY, KC_MNXT, CTALDEL, KC_RSFT, \
     RAISE_L_EX     , RAISE_L_TB       , RAISE_L_EC      ,           RAISE_R_EC      , RAISE_R_TB      , RAISE_R_EX
 
 
@@ -232,8 +247,8 @@
 #define ADJUST \
     _______, _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______, \
     XXXXXXX, QK_BOOT, EE_CLR , EH_LEFT, EH_RGHT, NK_TOGG,           CUS_VER, CUS_FLH, CUS_BLD, CUS_GEN, XXXXXXX, XXXXXXX, \
-    XXXXXXX, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI,           EH_LEFT, XXXXXXX, XXXXXXX, XXXXXXX, COLETOG, XXXXXXX, \
-    XXXXXXX, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, RGB_SPD,           EH_RGHT, XXXXXXX, XXXXXXX, XXXXXXX, GAMETOG, XXXXXXX, \
+    BL_TOGG, RM_TOGG, RM_HUEU, RM_SATU, RM_VALU, RM_SPDU,           EH_LEFT, XXXXXXX, XXXXXXX, XXXXXXX, COLETOG, XXXXXXX, \
+    BL_STEP, RM_NEXT, RM_HUED, RM_SATD, RM_VALD, RM_SPDD,           EH_RGHT, XXXXXXX, XXXXXXX, XXXXXXX, GAMETOG, XXXXXXX, \
     ADJUST_L_EX     , ADJUST_L_TB     , ADJUST_L_EC     ,           ADJUST_R_EC     , ADJUST_R_TB     , ADJUST_R_EX
 
 // clang-format on

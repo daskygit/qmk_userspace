@@ -53,7 +53,7 @@ void render_mod_status(uint8_t modifiers) {
     }
 }
 
-void render_logo(void) {
+void render_logo2(void) {
     static const char PROGMEM kb_logo[] = {0x80, 0x81, 0x82, 0x83, 0x84, 0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0};
     oled_write_P(kb_logo, false);
 }
@@ -80,7 +80,7 @@ void render_status_main(void) {
 #ifdef DEBUG_MATRIX_SCAN_RATE
     render_matrix_rate();
 #endif
-    render_logo();
+    render_logo2();
 }
 
 #ifdef USBPD_ENABLE
@@ -141,16 +141,16 @@ void render_status_secondary(void) {
     render_pd_allowance();
 #endif
     oled_advance_page(true);
-    render_logo();
+    render_logo2();
 }
 
 bool oled_task_user(void) {
-    if (is_oled_on()) {
-        if (is_keyboard_master()) {
-            render_status_main();
+    // if (is_oled_on()) {
+    if (is_keyboard_master()) {
+        render_status_main();
         } else {
             render_status_secondary();
         }
-    }
-    return false;
+        //}
+        return false;
 }

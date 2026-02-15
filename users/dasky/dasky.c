@@ -31,11 +31,11 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 __attribute__((weak)) void keyboard_post_init_keymap(void) {}
 
-char chordal_hold_handedness(keypos_t key) {
 #ifdef SPLIT_KEYBOARD
+__attribute__((weak)) char chordal_hold_handedness(keypos_t key) {
     return key.row < MATRIX_ROWS / 2 ? 'L' : 'R';
-#endif
 }
+#endif
 
 uint16_t get_flow_tap_term(uint16_t keycode, keyrecord_t* record, uint16_t prev_keycode) {
     if (is_flow_tap_key(keycode) && is_flow_tap_key(prev_keycode)) {
@@ -53,6 +53,9 @@ void keyboard_post_init_user(void) {
     // debug_matrix   = true;
     // debug_keyboard = true;
     // debug_mouse    = true;
+#ifdef OLED_ENABLE
+    oled_clear();
+#endif
 
 #ifdef SPLIT_KEYBOARD
     // Register keyboard state sync split transaction

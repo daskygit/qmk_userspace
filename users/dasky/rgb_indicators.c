@@ -95,11 +95,11 @@ void rgb_show_layer(uint8_t led_min, uint8_t led_max) {
                         case KC_RIGHT ... KC_UP:
                             hue = 201;
                             break;
-                        case KC_MS_UP ... KC_MS_RIGHT:
-                        case KC_MS_BTN1 ... KC_MS_BTN8:
+                        case MS_UP ... MS_RGHT:
+                        case MS_BTN1 ... MS_BTN8:
                             hue = 148;
                             break;
-                        case KC_MS_ACCEL0 ... KC_MS_ACCEL2:
+                        case MS_ACL0 ... MS_ACL2:
                             hue = 169;
                             break;
                         case EH_LEFT:
@@ -109,7 +109,7 @@ void rgb_show_layer(uint8_t led_min, uint8_t led_max) {
                             hue = 0;
                             break;
                         case GAMETOG:
-                        case RGB_TOG ... RGB_SPD:
+                        case UG_TOGG ... RM_SPDD:
                             continue;
                         case WINR:
                             hue = 180;
