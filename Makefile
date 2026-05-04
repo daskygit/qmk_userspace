@@ -55,9 +55,6 @@ BOARD_DEFS := \
 
 # short name ! keyboard path ! keymap name ! link source ! link target
 LINKED_BOARD_DEFS := \
-	nah!keyboards/dasky/nah!dasky!keyboards-dev/nah \
-	echo!keyboards/dasky/echo!dasky!keyboards-dev/echo \
-	stinky!keyboards/stinky!default!keyboards-dev/stinky \
 	g303!keyboards/g303!default!mouse-dev/g303 \
 	sp!keyboards/dasky/sp!default!keyboards-dev/sp \
 	halved!keyboards/dasky/halved!default!mouse-dev/halved \
@@ -66,8 +63,6 @@ LINKED_BOARD_DEFS := \
 	pl!keyboards/pointleft!default!keyboards-dev/pointleft \
 	r5!keyboards/rival5!default!mouse-dev/rival5 \
 	huge!keyboards/huge!default!mouse-dev/huge \
-
-
 
 keyboards_folder := keyboards/
 empty :=
@@ -136,5 +131,5 @@ $(foreach board_entry,$(LINKED_BOARD_DEFS),$(eval $(call handle_board_entry,$(bo
 $(foreach board_entry,$(LINKED_BOARD_DEFS),$(eval $(call handle_linked_board_entry,$(board_entry))))
 
 .PHONY: all
-all: nah echo stinky prime g303 reverb crkbd sp cp
+all: g303 reverb crkbd sp cp
 
