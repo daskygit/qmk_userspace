@@ -21,6 +21,16 @@ SED = sed
 ECHO = echo
 endif
 
+.PHONY: vial qmk clear-link
+vial: clear-link
+	@ln -s ~/source/vial-qmk qmk_firmware
+	@$(MAKE) links
+qmk: clear-link
+	@ln -s ~/source/qmk_firmware qmk_firmware
+	@$(MAKE) links
+clear-link: distclean
+	@rm qmk_firmware
+
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Cleaning
 
