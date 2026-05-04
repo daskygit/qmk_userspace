@@ -15,11 +15,11 @@ const pin_t matrix_out_pins[MATRIX_ROWS]  = {GP11,GP7,GP9,GP28,GP26, GP10, GP14}
 
 void matrix_init_custom(void) {
     for (uint8_t i = 0; i < MATRIX_ROWS; i++){
-        setPinOutputPushPull(matrix_out_pins[i]);
-        writePinHigh(matrix_out_pins[i]);
+        gpio_set_pin_output_push_pull(matrix_out_pins[i]);
+        gpio_write_pin_high(matrix_out_pins[i]);
     }
     for (uint8_t i = 0; i < MATRIX_COLS; i++){
-        setPinInputHigh(matrix_read_pins[i]);
+        gpio_set_pin_input_high(matrix_read_pins[i]);
     }
 }
 

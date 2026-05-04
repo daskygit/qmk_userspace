@@ -14,31 +14,31 @@ __attribute__((weak)) void bootloader_jump(void) {
 void mcu_reset(void) { NVIC_SystemReset(); }
 
 void board_init(void) {
-  setPinOutput(PMW_LED_PIN);
-  writePin(PMW_LED_PIN, 0);
-  setPinOutput(PMW_RESET_PIN);
-  writePin(PMW_RESET_PIN, 1);
-  setPinOutput(ENC_LED_PIN);
-  writePin(ENC_LED_PIN, 1);
+  gpio_set_pin_output_push_pull(PMW_LED_PIN);
+  gpio_write_pin_low(PMW_LED_PIN);
+  gpio_set_pin_output_push_pull(PMW_RESET_PIN);
+  gpio_write_pin_high(PMW_RESET_PIN);
+  gpio_set_pin_output_push_pull(ENC_LED_PIN);
+  gpio_write_pin_high(ENC_LED_PIN);
 
-  setPinOutput(DP_PU_PIN);
-  writePin(DP_PU_PIN, 0);
+  gpio_set_pin_output_push_pull(DP_PU_PIN);
+  gpio_write_pin_low(DP_PU_PIN);
 
-  setPinOutput(RED_G_PIN); // RED G
-  writePin(RED_G_PIN, 1);
-  setPinOutput(GREEN_G_PIN); // GREEN G
-  writePin(GREEN_G_PIN, 1);
-  setPinOutput(BLUE_G_PIN); // BLUE G
-  writePin(BLUE_G_PIN, 1);
+  gpio_set_pin_output_push_pull(RED_G_PIN); // RED G
+  gpio_write_pin_high(RED_G_PIN);
+  gpio_set_pin_output_push_pull(GREEN_G_PIN); // GREEN G
+  gpio_write_pin_high(GREEN_G_PIN);
+  gpio_set_pin_output_push_pull(BLUE_G_PIN); // BLUE G
+  gpio_write_pin_high(BLUE_G_PIN);
 
-  setPinOutput(GREEN_SIDE_PIN); // GREEN SIDE
-  writePin(GREEN_SIDE_PIN, 0);
-  setPinOutput(RED_SIDE_PIN); // RED SIDE
-  writePin(RED_SIDE_PIN, 0);
-  setPinOutput(BLUE_SIDE_PIN); // BLUE SIDE
-  writePin(BLUE_SIDE_PIN, 1);
+  gpio_set_pin_output_push_pull(GREEN_SIDE_PIN); // GREEN SIDE
+  gpio_write_pin_low(GREEN_SIDE_PIN);
+  gpio_set_pin_output_push_pull(RED_SIDE_PIN); // RED SIDE
+  gpio_write_pin_low(RED_SIDE_PIN);
+  gpio_set_pin_output_push_pull(BLUE_SIDE_PIN); // BLUE SIDE
+  gpio_write_pin_high(BLUE_SIDE_PIN);
 
-  setPinInput(A8);
-  setPinInputHigh(B2);
+  gpio_set_pin_input(A8);
+  gpio_set_pin_input_high(B2);
 
 }

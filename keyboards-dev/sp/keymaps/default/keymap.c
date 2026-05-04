@@ -4,7 +4,7 @@
 #include "pointing_device.h"
 #include QMK_KEYBOARD_H
 
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {[0] = LAYOUT(QK_BOOT, QK_BOOT, KC_MS_BTN1, KC_MS_BTN2, KC_MS_BTN1, KC_MS_BTN2)};
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {[0] = LAYOUT(QK_BOOT, QK_BOOT, MS_BTN1, MS_BTN2, MS_BTN1, MS_BTN2)};
 
 void keyboard_post_init_user(void) {
     // Customise these values to desired behaviour

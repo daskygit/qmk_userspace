@@ -50,8 +50,13 @@ distclean: userspace_clean
 
 # short name ! keyboard path ! keymap name
 BOARD_DEFS := \
+	dilemma!bastardkb/dilemma/3x5_3!dasky \
+	charybdis!bastardkb/charybdis/3x5/elitec!dasky \
 	reverb!dasky/reverb!dasky \
-	crkbd!crkbd!dasky \
+	lily58!mechboards/lily58/r2g!dasky \
+	sofle!mechboards/sofle/r2g!dasky \
+	pad!mechboards/pad/r2g!vial \
+
 
 # short name ! keyboard path ! keymap name ! link source ! link target
 LINKED_BOARD_DEFS := \
@@ -62,7 +67,7 @@ LINKED_BOARD_DEFS := \
 	pr!keyboards/pointright!default!keyboards-dev/pointright \
 	pl!keyboards/pointleft!default!keyboards-dev/pointleft \
 	r5!keyboards/rival5!default!mouse-dev/rival5 \
-	huge!keyboards/huge!default!mouse-dev/huge \
+	huge!keyboards/huge!vial!mouse-dev/huge \
 
 keyboards_folder := keyboards/
 empty :=
@@ -130,6 +135,8 @@ endef
 $(foreach board_entry,$(LINKED_BOARD_DEFS),$(eval $(call handle_board_entry,$(board_entry))))
 $(foreach board_entry,$(LINKED_BOARD_DEFS),$(eval $(call handle_linked_board_entry,$(board_entry))))
 
-.PHONY: all
-all: g303 reverb crkbd sp cp
-
+.PHONY: all all-qmk all-vial me
+all-qmk: g303 reverb sp dilemma charybdis cirque pr pl r5 huge
+all-vial: sofle lily58 pad
+all: all-qmk all-vial
+me: huge lily58 pad

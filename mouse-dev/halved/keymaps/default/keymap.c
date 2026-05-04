@@ -6,8 +6,8 @@
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
-        QK_BOOT,   KC_BTN2,
-        KC_BTN1
+        QK_BOOT,   MS_BTN2,
+        MS_BTN1
     )
 };
 // clang-format on

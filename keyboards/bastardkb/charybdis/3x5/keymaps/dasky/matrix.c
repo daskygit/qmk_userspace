@@ -6,8 +6,8 @@
 #include "string.h"
 #include "print.h"
 
-const pin_t matrix_read_pins[MATRIX_COLS] = {GP28, GP21, GP6, GP7, GP8};
-const pin_t matrix_out_pins[MATRIX_ROWS]  = {GP26, GP5, GP4, GP9};
+const pin_t matrix_read_pins[MATRIX_COLS] = {28u, 21u, 6u, 7u, 8u};
+const pin_t matrix_out_pins[MATRIX_ROWS]  = {26u, 5u, 4u, 9u};
 
 #define READ_BITMASK (1 << 28 | 1 << 21 | 1 << 6 | 1 << 7 | 1 << 8)
 #define OUT_BITMASK (1 << 26 | 1 << 5 | 1 << 4 | 1 << 9)

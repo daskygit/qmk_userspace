@@ -5,7 +5,7 @@
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //                  LB,       MB,         RB,        FB,          BB CPI
-    [0] = LAYOUT(KC_MS_BTN1, KC_MS_BTN3, KC_MS_BTN2, KC_MS_BTN5, KC_MS_BTN4, QK_BOOT)};
+    [0] = LAYOUT(MS_BTN1, MS_BTN3, MS_BTN2, MS_BTN5, MS_BTN4, QK_BOOT)};
 
 #include "pointing_device.h"
 
@@ -21,23 +21,23 @@ static int16_t scroll = 0;
 
 void encoder_scroll(void) {
     static fast_timer_t last = 0;
-    setPinOutput(ENCODER_PIN);
-    writePinHigh(ENCODER_PIN);
+    gpio_set_pin_output_push_pull(ENCODER_PIN);
+    gpio_write_pin_high(ENCODER_PIN);
     wait_us(10);
-    writePinLow(ENCODER_PIN);
+    gpio_write_pin_low(ENCODER_PIN);
     wait_us(10);
-    setPinInput(ENCODER_PIN);
+    gpio_set_pin_input(ENCODER_PIN);
     wait_us(10);
-    uint8_t b_bit = readPin(ENCODER_PIN);
+    uint8_t b_bit = gpio_read_pin(ENCODER_PIN);
     scroll -= b_bit;
-    setPinOutput(ENCODER_PIN);
-    writePinHigh(ENCODER_PIN);
+    gpio_set_pin_output_push_pull(ENCODER_PIN);
+    gpio_write_pin_high(ENCODER_PIN);
     wait_us(10);
-    writePinLow(ENCODER_PIN);
+    gpio_write_pin_low(ENCODER_PIN);
     wait_us(10);
-    setPinInput(ENCODER_PIN);
+    gpio_set_pin_input(ENCODER_PIN);
     wait_us(10);
-    uint8_t f_bit = readPin(ENCODER_PIN);
+    uint8_t f_bit = gpio_read_pin(ENCODER_PIN);
     scroll += f_bit;
     if (timer_elapsed_fast(last) > 1) {
         report_mouse_t scroll_report = {0};

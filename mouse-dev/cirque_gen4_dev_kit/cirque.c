@@ -183,13 +183,14 @@ i2c_status_t cirque_rushmore_get_report(report_mouse_t *mouse_report) {
     return I2C_STATUS_SUCCESS;
 }
 
-void pointing_device_driver_init(void) {
+bool pointing_device_driver_init(void) {
     i2c_init();
     cirque_rushmore_feedconfig1_t config;
     cirque_rushmore_extended_read(0xC2C4, 1, (uint8_t *)&config);
     config.primary_feed_enable = 1;
     config.primary_feed_type   = 0;
     cirque_rushmore_extended_write(0xC2C4, 1, (uint8_t *)&config);
+    return true; //fix me
 }
 
 report_mouse_t pointing_device_driver_get_report(report_mouse_t mouse_report) {

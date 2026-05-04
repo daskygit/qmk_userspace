@@ -118,7 +118,7 @@ paw3335_motion_burst_t paw3335_burst_read(void) {
     return data.burst;
 }
 
-void pointing_device_driver_init(void) {
+bool pointing_device_driver_init(void) {
     gpio_set_pin_output(C15);
     gpio_write_pin_high(C15);
 
@@ -220,7 +220,7 @@ void pointing_device_driver_init(void) {
             break;
         }
         if (i == 99) {
-            return; // probably failed?
+            return false; // probably failed?
         }
     }
     paw3335_write_reg(0x19, 0x10);
@@ -240,6 +240,7 @@ void pointing_device_driver_init(void) {
     paw3335_read_reg(0x06); // 00
     paw3335_write_reg(0x40, 0x80);
     paw3335_write_reg(0x4E, 0x1B);
+    return true;
 }
 
 report_mouse_t pointing_device_driver_get_report(report_mouse_t mouse_report) {
