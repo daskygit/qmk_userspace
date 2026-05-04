@@ -1,6 +1,0 @@
-QUANTUM_PAINTER_ENABLE = yes
-QUANTUM_PAINTER_DRIVERS += st7735_spi
-
-SRC += gfx/mb.qgf.c
-
-SERIAL_DRIVER = vendor

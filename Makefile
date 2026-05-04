@@ -48,14 +48,14 @@ LINKED_BOARD_DEFS := \
 	nah!keyboards/dasky/nah!dasky!keyboards-dev/nah \
 	echo!keyboards/dasky/echo!dasky!keyboards-dev/echo \
 	stinky!keyboards/stinky!default!keyboards-dev/stinky \
-	g303!keyboards/logitech/g303!default!mouse-dev/g303 \
-	cp!keyboards/mb/cp!dasky!keyboards-dev/cp \
+	g303!keyboards/g303!default!mouse-dev/g303 \
 	sp!keyboards/dasky/sp!default!keyboards-dev/sp \
 	halved!keyboards/dasky/halved!default!mouse-dev/halved \
 	cirque!keyboards/cirque_gen4_dev_kit!default!mouse-dev/cirque_gen4_dev_kit \
 	pr!keyboards/pointright!default!keyboards-dev/pointright \
 	pl!keyboards/pointleft!default!keyboards-dev/pointleft \
 	r5!keyboards/rival5!default!mouse-dev/rival5 \
+	huge!keyboards/huge!default!mouse-dev/huge \
 
 
 
